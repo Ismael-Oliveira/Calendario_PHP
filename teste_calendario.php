@@ -1,11 +1,14 @@
 
 <?php
-    $data = date('2019-07');
+    $data = date('2019-06');
     $day1 = date('w', strtotime($data."-01"));
     $days = date('t', strtotime($data."-01"));
     $qtdLinhas = ceil(($day1+$days)/7);
 
     $day = -$day1;
+    $dayIni = $day1;
+    $ini = 0;
+    $countEnd = 0;
     $data_ini = date('Y-m-d', strtotime($day.' days', strtotime($data)));
     $data_fim = date('Y-m-d', strtotime(($day + ($qtdLinhas * 7) - 1).' days', strtotime($data)));
     
@@ -79,3 +82,39 @@
 
     <?php endfor;?>
 </table>
+
+<br><br>
+<hr>
+<table border="1" width="100%">
+    <tr>
+        <th>DOM</th>
+        <th>SEG</th>
+        <th>TER</th>
+        <th>QUA</th>
+        <th>QUI</th>
+        <th>SEX</th>
+        <th>SAB</th>
+    </tr>
+    <?php for ($linha=0; $linha < $qtdLinhas; $linha++):?>
+        <tr>
+            <?php for ($col=0; $col < 7; $col++):?>
+                <?php
+                    if($ini < $dayIni){
+                        $ini++;
+                        $w = "";
+                    }else if($countEnd >= $days){
+                        $w = "";
+                    }
+                    else{
+                      $w = date('Y-m-d', strtotime(($col + $linha*7).' days', strtotime($data_ini)));
+                      $countEnd++;  
+                    }
+                    
+                ?>
+                <td><?php echo $w ?></td>
+            <?php endfor;?>        
+        </tr>
+
+    <?php endfor;?>
+</table>
+
